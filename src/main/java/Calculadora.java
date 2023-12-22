@@ -8,5 +8,9 @@ public class Calculadora {
 	public static void main(String[] args) {
 		Calculadora calc = new Calculadora();
 	}
+	
+	public float dividir(int num, int den) {
+		return (float) num / den;
+	}
 
 }

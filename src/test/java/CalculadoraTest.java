@@ -33,4 +33,31 @@ public class CalculadoraTest {
 		Assertions.assertNotNull(s1);
 //		Assertions.fail("Falhou pelo motivo A");
 	}
+	
+	@Test 
+	public void deveRetornarNumeroInteiroNaDivisao() {
+		Calculadora calc = new Calculadora();
+	
+		float resultado = calc.dividir(6, 2);
+		Assertions.assertEquals(3, resultado);
+	}
+	
+	@Test 
+	public void deveRetornarNumeroNegativoNaDivisao() {
+		Calculadora calc = new Calculadora();
+	
+		float resultado = calc.dividir(6, -2);
+		Assertions.assertEquals(-3, resultado);
+	}
+	
+	@Test 
+	public void deveRetornarNumeroDecimalNaDivisao() {
+		Calculadora calc = new Calculadora();
+	
+		float resultado = calc.dividir(10, 3);
+		Assertions.assertEquals(3.3333332538604736, resultado);
+
+		// the 3 parameter is the delta
+		Assertions.assertEquals(3.33, resultado, 0.01); 
+	}
 }
