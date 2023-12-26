@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.management.RuntimeErrorException;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -59,5 +61,25 @@ public class CalculadoraTest {
 
 		// the 3 parameter is the delta
 		Assertions.assertEquals(3.33, resultado, 0.01); 
+	}
+	
+	@Test 
+	public void deveRetornarZeroComNumeradorZeroNaDivisao() {
+		Calculadora calc = new Calculadora();
+	
+		float resultado = calc.dividir(0, 2);
+		Assertions.assertEquals(0, resultado);
+	}
+	
+	//RuntimeException throw a failure RuntimeError throw an error
+	@Test 
+	public void deveLancarExcecaoQuandoDividirPorZero_Jnit4() {
+		System.out.println("Começou");
+		try {
+			float resultado = 10 / 10;
+		}catch (ArithmeticException e) {
+			Assertions.assertEquals("/ by zero", e.getMessage());
+		}
+		System.out.println("Terminou");
 	}
 }
