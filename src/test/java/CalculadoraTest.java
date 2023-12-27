@@ -74,12 +74,20 @@ public class CalculadoraTest {
 	//RuntimeException throw a failure RuntimeError throw an error
 	@Test 
 	public void deveLancarExcecaoQuandoDividirPorZero_Jnit4() {
-		System.out.println("Começou");
 		try {
-			float resultado = 10 / 10;
+			float resultado = 10 / 0;
+			Assertions.fail("Deveria ter sido lançado uma exceção na divisão");
 		}catch (ArithmeticException e) {
 			Assertions.assertEquals("/ by zero", e.getMessage());
 		}
-		System.out.println("Terminou");
+	}
+	
+	//A class and an exec
+	@Test 
+	public void deveLancarExcecaoQuandoDividirPorZero_Jnit5() {
+		ArithmeticException exception = Assertions.assertThrows(ArithmeticException.class, () ->{
+			float resultado = 10 / 0;
+		});
+		Assertions.assertEquals("/ by zero", exception.getMessage());
 	}
 }
