@@ -1,23 +1,26 @@
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.management.RuntimeErrorException;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class CalculadoraTest {
+
+	private Calculadora calc = new Calculadora();
+	private static int contador = 0; 
+	//para cada teste o contador é zerado pelo JUnit5, todas as variaveis serão novas
+	//se a variavel for static não recebera um reset a cada execução
 	
 	@Test
 	public void testSomar() {
-		Calculadora calc = new Calculadora();
-		
+		System.out.println(++contador);
 		Assertions.assertTrue(calc.soma(2, 3) == 5);
 		Assertions.assertEquals(5, calc.soma(2, 3));
 	}
 	
 	@Test
 	public void assertivas() {
+		System.out.println(++contador);
 		Assertions.assertEquals("Casa", "Casa");
 		Assertions.assertNotEquals("Casa", "casa");
 		Assertions.assertTrue("casa".equalsIgnoreCase("CASA"));
@@ -38,15 +41,13 @@ public class CalculadoraTest {
 	
 	@Test 
 	public void deveRetornarNumeroInteiroNaDivisao() {
-		Calculadora calc = new Calculadora();
-	
+		System.out.println(++contador);
 		float resultado = calc.dividir(6, 2);
 		Assertions.assertEquals(3, resultado);
 	}
 	
 	@Test 
 	public void deveRetornarNumeroNegativoNaDivisao() {
-		Calculadora calc = new Calculadora();
 	
 		float resultado = calc.dividir(6, -2);
 		Assertions.assertEquals(-3, resultado);
@@ -54,7 +55,6 @@ public class CalculadoraTest {
 	
 	@Test 
 	public void deveRetornarNumeroDecimalNaDivisao() {
-		Calculadora calc = new Calculadora();
 	
 		float resultado = calc.dividir(10, 3);
 		Assertions.assertEquals(3.3333332538604736, resultado);
@@ -65,7 +65,6 @@ public class CalculadoraTest {
 	
 	@Test 
 	public void deveRetornarZeroComNumeradorZeroNaDivisao() {
-		Calculadora calc = new Calculadora();
 	
 		float resultado = calc.dividir(0, 2);
 		Assertions.assertEquals(0, resultado);
