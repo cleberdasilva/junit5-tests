@@ -1,15 +1,43 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class CalculadoraTest {
 
-	private Calculadora calc = new Calculadora();
+	//private Calculadora calc = new Calculadora();
+	private static Calculadora calc;
+	
+	
 	private static int contador = 0; 
 	//para cada teste o contador é zerado pelo JUnit5, todas as variaveis serão novas
 	//se a variavel for static não recebera um reset a cada execução
+	
+	//to every execution I´ll a new calculator initialized
+	@BeforeEach
+	public void setup() {
+		//calc = new Calculadora();
+		System.out.println("^^^");
+	}
+	
+	
+	@AfterEach  
+	public void tearDown() {
+		System.out.println("vvv");
+	}
+	
+	//need to be a static method
+	@BeforeAll
+	public static void setupAll() {
+		System.out.println("--- Before All ---");
+		calc = new Calculadora();
+	}
+	
 	
 	@Test
 	public void testSomar() {
