@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Test;
 
 public class CalculadoraTest {
 
-	//private Calculadora calc = new Calculadora();
-	private static Calculadora calc;
+	private Calculadora calc = new Calculadora();
+//	private static Calculadora calc;
 	
 	
 	private static int contador = 0; 
@@ -35,9 +35,13 @@ public class CalculadoraTest {
 	@BeforeAll
 	public static void setupAll() {
 		System.out.println("--- Before All ---");
-		calc = new Calculadora();
+//		calc = new Calculadora();
 	}
 	
+	@AfterAll  
+	public static void tearDownAll() {
+		System.out.println("--- After All ---");
+	}
 	
 	@Test
 	public void testSomar() {
