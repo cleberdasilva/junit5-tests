@@ -30,4 +30,18 @@ public class UsuarioTest {
 		umUsuario().comNome(null).agora());
 		assertEquals("Name is riquired", ex.getMessage());
 	}
+	
+	@Test
+	public void deveRejeitarUsuarioSemEmail() {
+		ValidationException ex = Assertions.assertThrows(ValidationException.class, () ->
+		umUsuario().comEmail(null).agora());
+		assertEquals("Email is riquired", ex.getMessage());
+	}
+	
+	@Test
+	public void deveRejeitarUsuarioSemSenha() {
+		ValidationException ex = Assertions.assertThrows(ValidationException.class, () ->
+		umUsuario().comSenha(null).agora());
+		assertEquals("Password is riquired", ex.getMessage());
+	}
 }
