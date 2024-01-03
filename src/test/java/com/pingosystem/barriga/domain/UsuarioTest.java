@@ -1,5 +1,6 @@
 package com.pingosystem.barriga.domain;
 
+import static com.pingosystem.barriga.domain.builders.UsuarioBuilder.umUsurio;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Assertions;
@@ -13,20 +14,20 @@ public class UsuarioTest {
 	@Test
 //	@DisplayName("Deve criar um suário válido")
 	public void deveCriarUsuarioValido() {
-		Usuario usario = new Usuario(1L, "Usuario Valido", "user@gmail.com", "123456");
+		Usuario usario = umUsurio().agora();
 		
 		Assertions.assertAll("Usuario", 
 				() -> assertEquals(1L, usario.id()),
-				() -> assertEquals("Usuario Valido", usario.nome()),
+				() -> assertEquals("Usuário Válido", usario.nome()),
 				() -> assertEquals("user@gmail.com", usario.email()),
-				() -> assertEquals("123456", usario.senha())
+				() -> assertEquals("12345678", usario.senha())
 		);
 	}
 	
 	@Test
 	public void deveRejeitarUsuarioSemNome() {
 		ValidationException ex = Assertions.assertThrows(ValidationException.class, () ->
-		new Usuario(1L, null, "user@gmail.com", "123456"));
+		umUsurio().comNome(null).agora());
 		assertEquals("Name is riquired", ex.getMessage());
 	}
 }
