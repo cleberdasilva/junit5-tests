@@ -2,51 +2,50 @@ package com.pingosystem.barriga.domain.builders;
 
 import com.pingosystem.barriga.domain.Usuario;
 
-public class UsuarioBuilder {
+public class UsuarioBuilderOld {
 	private Long id;
 	private String nome;
 	private String email;
 	private String senha;
 
-	private UsuarioBuilder() {
+	private UsuarioBuilderOld() {
 	}
 
-	public static UsuarioBuilder umUsurio() {
-		UsuarioBuilder builder = new UsuarioBuilder();
+	public static UsuarioBuilderOld umUsuario() {
+		UsuarioBuilderOld builder = new UsuarioBuilderOld();
 
 		inicializarDadosPadroes(builder);
 
 		return builder;
 	}
 
-	private static void inicializarDadosPadroes(UsuarioBuilder builder) {
+	private static void inicializarDadosPadroes(UsuarioBuilderOld builder) {
 		builder.id = 1L;
 		builder.nome = "Usuário Válido";
 		builder.email = "user@gmail.com";
 		builder.senha = "12345678";
 	}
 
-	public UsuarioBuilder comId(Long param) {
+	public UsuarioBuilderOld comId(Long param) {
 		id = param;
 		return this;
 
 	}
 
-	public UsuarioBuilder comNome(String param) {
+	public UsuarioBuilderOld comNome(String param) {
 		nome = param;
 		return this;
 	}
 
-	public UsuarioBuilder comEmail(String param) {
+	public UsuarioBuilderOld comEmail(String param) {
 		email = param;
 		return this;
 	}
 	
-	public UsuarioBuilder comSenha(String param) {
+	public UsuarioBuilderOld comSenha(String param) {
 		senha = param;
 		return this;
 	}
-	
 	
 	//Returning entity
 	public Usuario agora() {
