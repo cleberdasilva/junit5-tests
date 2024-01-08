@@ -11,9 +11,9 @@ public class Usuario {
 	
 	public Usuario(Long id, String nome, String email, String senha) {
 		
-		if (nome == null) throw new ValidationException("Name is riquired");
-		if (email == null) throw new ValidationException("Email is riquired");
-		if (senha == null) throw new ValidationException("Password is riquired");
+		if (nome == null) throw new ValidationException("Name is required");
+		if (email == null) throw new ValidationException("Email is required");
+		if (senha == null) throw new ValidationException("Password is required");
 		
 		this.id = id;
 		this.nome = nome;
