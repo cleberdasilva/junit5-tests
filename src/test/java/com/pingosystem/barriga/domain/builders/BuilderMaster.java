@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.pingosystem.barriga.domain.Usuario;
+import com.pingosystem.barriga.domain.Conta;
 
 /**
  * Classe responsável pela criação de builders de entidades
@@ -138,6 +138,6 @@ public class BuilderMaster {
 
 	public static void main(String[] args) {
 		BuilderMaster master = new BuilderMaster();
-		master.gerarCodigoClasse(Usuario.class);
+		master.gerarCodigoClasse(Conta.class);
 	}
 }
