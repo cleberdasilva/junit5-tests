@@ -26,14 +26,21 @@ public class UsuarioServiceTest {
 	
 	@Test
 	public void deveRetornarUsuarioPorEmail() {
-		UsuarioRepository usarioRepository = Mockito.mock(UsuarioRepository.class);
-		service = new UsuarioService(usarioRepository);
+		UsuarioRepository usuarioRepository = Mockito.mock(UsuarioRepository.class);
+		service = new UsuarioService(usuarioRepository);
 		
-		Mockito.when(usarioRepository.getUserByEmail("mail@gmail.com"))
+		Mockito.when(usuarioRepository.getUserByEmail("mail@gmail.com"))
 		.thenReturn(Optional.of(UsuarioBuilder.umUsuario().agora()));
 		
 		Optional<Usuario> user = service.getUserByEmail("mail@gmail.com");
-		Assertions.assertFalse(user.isEmpty());
+		Assertions.assertTrue(user.isPresent());
+		
+		System.out.println(user);
+		
+		//Mockito.verify(usuarioRepository, Mockito.times(1)).getUserByEmail("mail@gmail.com");
+		Mockito.verify(usuarioRepository, Mockito.atLeastOnce()).getUserByEmail("mail@gmail.com");
+		Mockito.verify(usuarioRepository, Mockito.never()).getUserByEmail("other@gmail.com");
+		Mockito.verifyNoMoreInteractions(usuarioRepository);
 	}
 	
 	
