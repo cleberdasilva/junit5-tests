@@ -7,19 +7,33 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import com.pingosystem.barriga.domain.Usuario;
+import com.pingosystem.barriga.domain.builders.UsuarioBuilder;
 import com.pingosystem.barriga.service.repositories.UsuarioRepository;
 
 public class UsuarioServiceTest {
 	private UsuarioService service;
 	
 	@Test
+	public void deveRetornarEmptyQuadoUsuarioInexistente() {
+		UsuarioRepository usarioRepository = Mockito.mock(UsuarioRepository.class);
+		service = new UsuarioService(usarioRepository);
+		
+		Mockito.when(usarioRepository.getUserByEmail("mail@gmail.com")).thenReturn(Optional.empty());
+		
+		Optional<Usuario> user = service.getUserByEmail("mail@gmail.com");
+		Assertions.assertTrue(user.isEmpty());
+	}
+	
+	@Test
 	public void deveRetornarUsuarioPorEmail() {
 		UsuarioRepository usarioRepository = Mockito.mock(UsuarioRepository.class);
 		service = new UsuarioService(usarioRepository);
 		
+		Mockito.when(usarioRepository.getUserByEmail("mail@gmail.com"))
+		.thenReturn(Optional.of(UsuarioBuilder.umUsuario().agora()));
+		
 		Optional<Usuario> user = service.getUserByEmail("mail@gmail.com");
-		Assertions.assertTrue(user.isEmpty());
-		//System.out.println(user);
+		Assertions.assertFalse(user.isEmpty());
 	}
 	
 	
