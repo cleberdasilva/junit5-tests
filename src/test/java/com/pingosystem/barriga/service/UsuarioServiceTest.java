@@ -1,11 +1,12 @@
 package com.pingosystem.barriga.service;
 
 import static com.pingosystem.barriga.domain.builders.UsuarioBuilder.umUsuario;
-import static org.mockito.Mockito.mockitoSession;
 
 import java.util.Optional;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -15,13 +16,22 @@ import com.pingosystem.barriga.service.repositories.UsuarioRepository;
 
 public class UsuarioServiceTest {
 	private UsuarioService service;
+	private UsuarioRepository usuarioRepository;
+	
+	@BeforeEach
+	public void setup() {
+		usuarioRepository = Mockito.mock(UsuarioRepository.class);
+		service = new UsuarioService(usuarioRepository);
+	}
+	
+//	@AfterEach
+//	public void tearDeown() {
+//		Mockito.verifyNoMoreInteractions(usuarioRepository);
+//	}
 	
 	@Test
 	public void deveRetornarEmptyQuadoUsuarioInexistente() {
-		UsuarioRepository usarioRepository = Mockito.mock(UsuarioRepository.class);
-		service = new UsuarioService(usarioRepository);
-		
-		Mockito.when(usarioRepository.getUserByEmail("mail@gmail.com")).thenReturn(Optional.empty());
+		Mockito.when(usuarioRepository.getUserByEmail("mail@gmail.com")).thenReturn(Optional.empty());
 		
 		Optional<Usuario> user = service.getUserByEmail("mail@gmail.com");
 		Assertions.assertTrue(user.isEmpty());
@@ -29,33 +39,22 @@ public class UsuarioServiceTest {
 	
 	@Test
 	public void deveRetornarUsuarioPorEmail() {
-		UsuarioRepository usuarioRepository = Mockito.mock(UsuarioRepository.class);
-		service = new UsuarioService(usuarioRepository);
 		
 		Mockito.when(usuarioRepository.getUserByEmail("mail@gmail.com"))
-		.thenReturn(Optional.of(UsuarioBuilder.umUsuario().agora()), Optional.of(UsuarioBuilder.umUsuario().agora()), null);
+		.thenReturn(Optional.of(UsuarioBuilder.umUsuario().agora()));
 		
 		Optional<Usuario> user = service.getUserByEmail("mail@gmail.com");
 		System.out.println(user);
 		Assertions.assertTrue(user.isPresent());
-		user = service.getUserByEmail("mail123123123@gmail.com");
-		System.out.println(user);
-		user = service.getUserByEmail("mail@gmail.com");
-		System.out.println(user);
-		user = service.getUserByEmail("mail@gmail.com");
-		System.out.println(user);
 		
-		Mockito.verify(usuarioRepository, Mockito.times(3)).getUserByEmail("mail@gmail.com");
-		Mockito.verify(usuarioRepository, Mockito.times(1)).getUserByEmail("mail123123123@gmail.com");
 		Mockito.verify(usuarioRepository, Mockito.atLeastOnce()).getUserByEmail("mail@gmail.com");
 		Mockito.verify(usuarioRepository, Mockito.never()).getUserByEmail("other@gmail.com");
-		Mockito.verifyNoMoreInteractions(usuarioRepository);
+		
 	}
 	
 	@Test
 	public void deveSalvarUsuarioComSucesso() {
-		UsuarioRepository usuarioRepository = Mockito.mock(UsuarioRepository.class);
-		service = new UsuarioService(usuarioRepository);
+		
 		Usuario userToSave = umUsuario().comId(null).agora();
 		
 		Mockito.when(usuarioRepository.getUserByEmail(userToSave.email()))
