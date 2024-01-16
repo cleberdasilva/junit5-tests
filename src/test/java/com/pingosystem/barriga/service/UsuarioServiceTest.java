@@ -1,5 +1,8 @@
 package com.pingosystem.barriga.service;
 
+import static com.pingosystem.barriga.domain.builders.UsuarioBuilder.umUsuario;
+import static org.mockito.Mockito.mockitoSession;
+
 import java.util.Optional;
 
 import org.junit.jupiter.api.Assertions;
@@ -49,6 +52,25 @@ public class UsuarioServiceTest {
 		Mockito.verifyNoMoreInteractions(usuarioRepository);
 	}
 	
+	@Test
+	public void deveSalvarUsuarioComSucesso() {
+		UsuarioRepository usuarioRepository = Mockito.mock(UsuarioRepository.class);
+		service = new UsuarioService(usuarioRepository);
+		Usuario userToSave = umUsuario().comId(null).agora();
+		
+		Mockito.when(usuarioRepository.getUserByEmail(userToSave.email()))
+			.thenReturn(Optional.empty());
+		
+		Mockito.when(usuarioRepository.salvar(userToSave)).thenReturn(umUsuario().agora());
+		
+		Usuario savedUser = service.salvar(userToSave);
+		Assertions.assertNotNull(savedUser.id());
+		
+		Mockito.verify(usuarioRepository).getUserByEmail(userToSave.email());
+		//next line it´s not necessary ´cause we are checking it at line 67
+//		Mockito.verify(usuarioRepository).salvar(userToSave);
+		
+	}
 	
 //	Test using dummyClass
 	/*@Test
