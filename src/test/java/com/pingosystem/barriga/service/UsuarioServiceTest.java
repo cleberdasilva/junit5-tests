@@ -15,6 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.pingosystem.barriga.domain.Usuario;
 import com.pingosystem.barriga.domain.builders.UsuarioBuilder;
+import com.pingosystem.barriga.domain.exceptions.ValidationException;
 import com.pingosystem.barriga.service.repositories.UsuarioRepository;
 
 @Tag("service")
@@ -67,6 +68,21 @@ public class UsuarioServiceTest {
 		//next line it´s not necessary ´cause we are checking it at line 67
 //		Mockito.verify(usuarioRepository).salvar(userToSave);
 		
+	}
+	
+	@Test
+	public void deveRejeitarUsuarioExistente() {
+		Usuario userTosave = umUsuario().comId(null).agora();
+		
+		Mockito.when(usuarioRepository.getUserByEmail(userTosave.email()))
+			.thenReturn(Optional.of(umUsuario().agora()));
+		
+		ValidationException ex = Assertions.assertThrows(ValidationException.class, () ->
+		service.salvar(userTosave));
+		
+		Assertions.assertTrue(ex.getMessage().endsWith("já cadastrado!"));
+		
+		Mockito.verify(usuarioRepository, Mockito.never()).salvar(userTosave);
 	}
 	
 //	Test using dummyClass
