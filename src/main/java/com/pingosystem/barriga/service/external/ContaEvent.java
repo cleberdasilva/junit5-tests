@@ -6,5 +6,5 @@ public class ContaEvent {
 	
 	public enum EventType {CREATED, UPDATED, DELETED}
 	
-	public void dispatch(Conta conta, EventType type){}
+	public void dispatch(Conta conta, EventType type) throws Exception{}
 }
