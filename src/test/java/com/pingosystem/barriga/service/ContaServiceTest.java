@@ -14,6 +14,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.pingosystem.barriga.domain.Conta;
 import com.pingosystem.barriga.domain.exceptions.ValidationException;
+import com.pingosystem.barriga.service.external.ContaEvent;
+import com.pingosystem.barriga.service.external.ContaEvent.EventType;
 import com.pingosystem.barriga.service.repositories.ContaRepository;
 
 @ExtendWith(MockitoExtension.class)
@@ -25,11 +27,16 @@ public class ContaServiceTest {
 	@Mock
 	private ContaRepository contaRepository;
 	
+	@Mock
+	private ContaEvent event;
+	
 	@Test
 	public void deveSalvarPrimeiraContaComSucesso() {
 		Conta contaToSave = umaConta().comId(null).agora();
 		
 		Mockito.when(contaRepository.salvar(contaToSave)).thenReturn(umaConta().agora());
+		//void method
+		Mockito.doNothing().when(event).dispatch(umaConta().agora(), EventType.CREATED);
 		
 		Conta savedConta = contaService.salvar(contaToSave);
 		Assertions.assertNotNull(savedConta.id());
