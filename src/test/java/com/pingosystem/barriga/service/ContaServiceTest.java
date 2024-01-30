@@ -2,12 +2,13 @@ package com.pingosystem.barriga.service;
 
 import static com.pingosystem.barriga.domain.builders.ContaBuilder.umaConta;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -31,6 +32,9 @@ public class ContaServiceTest {
 	@Mock
 	private ContaEvent event;
 	
+	@Captor
+	private ArgumentCaptor<Conta> contaCaptor;
+	
 	@Test
 	public void deveSalvarPrimeiraContaComSucesso() throws Exception {
 		Conta contaToSave = umaConta().comId(null).agora();
@@ -42,7 +46,10 @@ public class ContaServiceTest {
 		Conta savedConta = contaService.salvar(contaToSave);
 		Assertions.assertNotNull(savedConta.id());
 		
-		Mockito.verify(contaRepository).salvar(Mockito.any());
+		Mockito.verify(contaRepository).salvar(contaCaptor.capture());
+//		System.out.println("Captor: " + contaCaptor.getAllValues());
+		Assertions.assertNull(contaCaptor.getValue().id());
+		Assertions.assertTrue(contaCaptor.getValue().nome().startsWith("Conta Válida"));
 	}
 	
 	@Test
