@@ -1,5 +1,6 @@
 package com.pingosystem.barriga.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.pingosystem.barriga.domain.Conta;
@@ -24,7 +25,8 @@ public class ContaService {
 				throw new ValidationException("Usuário já possui uma conta com este nome");
 		});
 		
-		Conta contaPersistida = contaRepository.salvar(conta);
+		Conta contaPersistida = contaRepository.salvar(
+					new Conta(conta.id(), conta.nome() + LocalDateTime.now(), conta.usuario()));
 		try {
 			event.dispatch(contaPersistida, EventType.CREATED);
 		} catch (Exception e) {

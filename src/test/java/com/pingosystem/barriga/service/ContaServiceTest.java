@@ -2,6 +2,7 @@ package com.pingosystem.barriga.service;
 
 import static com.pingosystem.barriga.domain.builders.ContaBuilder.umaConta;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 import org.junit.jupiter.api.Assertions;
@@ -34,12 +35,14 @@ public class ContaServiceTest {
 	public void deveSalvarPrimeiraContaComSucesso() throws Exception {
 		Conta contaToSave = umaConta().comId(null).agora();
 		
-		Mockito.when(contaRepository.salvar(contaToSave)).thenReturn(umaConta().agora());
+		Mockito.when(contaRepository.salvar(Mockito.any(Conta.class))).thenReturn(umaConta().agora());
 		//void method
 		Mockito.doNothing().when(event).dispatch(umaConta().agora(), EventType.CREATED);
 		
 		Conta savedConta = contaService.salvar(contaToSave);
 		Assertions.assertNotNull(savedConta.id());
+		
+		Mockito.verify(contaRepository).salvar(Mockito.any());
 	}
 	
 	@Test
@@ -48,7 +51,7 @@ public class ContaServiceTest {
 		
 		Mockito.when(contaRepository.obterContasPorUsuario(contaToSave.usuario().id()))
 			.thenReturn(Arrays.asList(umaConta().comNome("Outra Conta").agora()));
-		Mockito.when(contaRepository.salvar(contaToSave)).thenReturn(umaConta().agora());
+		Mockito.when(contaRepository.salvar(Mockito.any(Conta.class))).thenReturn(umaConta().agora());
 		
 		Conta savedConta = contaService.salvar(contaToSave);
 		Assertions.assertNotNull(savedConta.id());
@@ -71,7 +74,7 @@ public class ContaServiceTest {
 		Conta contaToSave = umaConta().comId(null).agora();
 		Conta contaSalva = umaConta().agora();
 		
-		Mockito.when(contaRepository.salvar(contaToSave)).thenReturn(contaSalva);
+		Mockito.when(contaRepository.salvar(Mockito.any(Conta.class))).thenReturn(contaSalva);
 		//void method
 		Mockito.doThrow(new Exception("Falha Catastrófica"))
 			.when(event).dispatch(contaSalva, EventType.CREATED);

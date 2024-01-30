@@ -65,6 +65,11 @@ public class Conta {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "Conta [id=" + id + ", nome=" + nome + ", usuario=" + usuario + "]";
+	}
 	
 	
 }
