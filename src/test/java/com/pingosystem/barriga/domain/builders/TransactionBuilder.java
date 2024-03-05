@@ -4,6 +4,7 @@ import com.pingosystem.barriga.domain.Conta;
 import java.lang.Long;
 import java.util.Arrays;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.lang.Boolean;
 import java.lang.Double;
 import java.lang.String;
@@ -14,7 +15,7 @@ public class TransactionBuilder {
 	private Transaction elemento;
 	private TransactionBuilder(){}
 
-	public static TransactionBuilder umTransaction() {
+	public static TransactionBuilder umaTransaction() {
 		TransactionBuilder builder = new TransactionBuilder();
 		inicializarDadosPadroes(builder);
 		return builder;
@@ -25,11 +26,11 @@ public class TransactionBuilder {
 		Transaction elemento = builder.elemento;
 
 		
-		elemento.setId(0L);
-		elemento.setDescricao("");
-		elemento.setValor(0.0);
-		elemento.setConta(null);
-		elemento.setData(null);
+		elemento.setId(1L);
+		elemento.setDescricao("Transação Válida");
+		elemento.setValor(10.0);
+		elemento.setConta(ContaBuilder.umaConta().agora());
+		elemento.setData(LocalDate.now());
 		elemento.setStatus(false);
 	}
 

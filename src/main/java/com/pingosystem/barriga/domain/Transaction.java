@@ -46,5 +46,54 @@ public class Transaction {
 	public void setStatus(Boolean status) {
 		this.status = status;
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((conta == null) ? 0 : conta.hashCode());
+		result = prime * result + ((data == null) ? 0 : data.hashCode());
+		result = prime * result + ((descricao == null) ? 0 : descricao.hashCode());
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
+		result = prime * result + ((valor == null) ? 0 : valor.hashCode());
+		return result;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Transaction other = (Transaction) obj;
+		if (conta == null) {
+			if (other.conta != null)
+				return false;
+		} else if (!conta.equals(other.conta))
+			return false;
+		if (data == null) {
+			if (other.data != null)
+				return false;
+		} else if (!data.equals(other.data))
+			return false;
+		if (descricao == null) {
+			if (other.descricao != null)
+				return false;
+		} else if (!descricao.equals(other.descricao))
+			return false;
+		if (status == null) {
+			if (other.status != null)
+				return false;
+		} else if (!status.equals(other.status))
+			return false;
+		if (valor == null) {
+			if (other.valor != null)
+				return false;
+		} else if (!valor.equals(other.valor))
+			return false;
+		return true;
+	}
+	
 	
 }
