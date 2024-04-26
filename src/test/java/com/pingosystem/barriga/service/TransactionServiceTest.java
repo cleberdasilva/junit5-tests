@@ -1,6 +1,8 @@
 package com.pingosystem.barriga.service;
 
 import static com.pingosystem.barriga.domain.builders.TransactionBuilder.umaTransaction;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -31,6 +33,22 @@ public class TransactionServiceTest {
 		Transaction transacaoSalva = service.salvar(transacaoParaSalvar);
 //		Assertions.assertNotNull(transacaoSalva.getId());
 		Assertions.assertEquals(transacaoPersistida ,transacaoSalva);
+		Assertions.assertAll("Transacao",
+			() -> assertEquals(1L, transacaoSalva.getId()),
+			() -> assertEquals("Transação Válida", transacaoSalva.getDescricao()),
+			() -> {
+				assertAll("Conta",
+					() -> assertEquals("Conta Válida", transacaoSalva.getConta().nome()),
+					() -> {
+						assertAll("Usuário",
+							()-> assertEquals("Usuário Válido", transacaoSalva.getConta().usuario().nome()),
+							()-> assertEquals("12345678", transacaoSalva.getConta().usuario().senha())
+						);
+					}
+				);
+			}
+		);
+		
 	}
 
 }
